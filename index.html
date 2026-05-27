@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Seoyeon Lee · Graduate Researcher, POSTECH ML Lab</title>
+<meta name="description" content="Seoyeon Lee — M.S. student and graduate researcher at the Machine Learning Lab, POSTECH. LLM agents, machine learning for NLP, and generative AI." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+  :root{
+    --paper:#ebe7dd;
+    --paper-2:#f4f1e9;
+    --ink:#1b1a17;
+    --ink-soft:#46443e;
+    --muted:#827d72;
+    --line:#cec9bc;
+    --line-soft:#dcd8cc;
+    --accent:#2a31bd;
+    --accent-ink:#1d2390;
+    --accent-soft:rgba(42,49,189,0.07);
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Pretendard","Pretendard Variable",-apple-system,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:var(--paper-2);}
+
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.4;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
+  }
+
+  a{color:inherit;}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 40px;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(235,231,221,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .nav-name{font-family:var(--serif);font-size:1.15rem;font-weight:600;letter-spacing:-.01em;}
+  .nav-name span{color:var(--accent);}
+  .nav-links{display:flex;gap:30px;font-family:var(--mono);font-size:.74rem;
+    text-transform:uppercase;letter-spacing:.12em;}
+  .nav-links a{text-decoration:none;color:var(--muted);transition:color .2s;position:relative;}
+  .nav-links a:hover,.nav-links a.active{color:var(--ink);}
+  .nav-links a.active::before{content:"";position:absolute;left:-12px;top:50%;
+    width:5px;height:5px;background:var(--accent);border-radius:50%;transform:translateY(-50%);}
+  @media(max-width:720px){.nav-links{display:none;}}
+
+  /* SECTION HEADERS */
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:46px;}
+  .sec-num{font-family:var(--mono);font-size:.78rem;color:var(--accent);letter-spacing:.05em;}
+  .sec-label{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;
+    letter-spacing:.18em;color:var(--muted);}
+  .sec-rule{flex:1;height:1px;background:var(--line);align-self:center;}
+
+  section{padding:110px 0;border-top:1px solid var(--line-soft);}
+  section:first-of-type{border-top:none;}
+
+  /* HERO */
+  .hero{padding:0;border:none;position:relative;min-height:88vh;display:flex;align-items:center;}
+  #embed-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;
+    -webkit-mask-image:radial-gradient(115% 95% at 78% 22%,#000 0%,transparent 72%);
+            mask-image:radial-gradient(115% 95% at 78% 22%,#000 0%,transparent 72%);}
+  .hero .wrap{position:relative;z-index:1;padding-top:90px;padding-bottom:90px;}
+  .hero-tag{font-family:var(--mono);font-size:.8rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:26px;
+    display:flex;align-items:center;gap:10px;}
+  .hero-tag::before{content:"";width:34px;height:1px;background:var(--accent);}
+  .hero h1{font-family:var(--serif);font-weight:500;letter-spacing:-.025em;
+    line-height:.98;font-size:clamp(3.3rem,9.5vw,7rem);margin-bottom:6px;}
+  .hero h1 em{font-style:italic;color:var(--accent);}
+  .hero-role{font-family:var(--serif);font-size:clamp(1.4rem,3.4vw,2.1rem);
+    font-weight:400;color:var(--ink-soft);font-style:italic;margin-bottom:34px;}
+  .hero-intro{max-width:560px;font-size:1.06rem;color:var(--ink-soft);margin-bottom:38px;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:14px;}
+  .pill{font-family:var(--mono);font-size:.76rem;letter-spacing:.04em;
+    border:1px solid var(--line);padding:8px 15px;border-radius:100px;
+    color:var(--ink-soft);background:var(--paper-2);}
+  .pill.accent{background:var(--accent);color:var(--paper-2);border-color:var(--accent);}
+  .scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--muted);
+    text-transform:uppercase;z-index:1;}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:60px;}
+  .about-grid p{font-size:1.18rem;line-height:1.72;color:var(--ink-soft);margin-bottom:22px;}
+  .about-grid p strong{color:var(--ink);font-weight:600;}
+  .about-grid .lead{font-family:var(--serif);font-size:1.5rem;line-height:1.5;color:var(--ink);}
+  .facts{border-left:1px solid var(--line);padding-left:30px;}
+  .fact{padding:16px 0;border-bottom:1px solid var(--line-soft);}
+  .fact:last-child{border-bottom:none;}
+  .fact dt{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;
+    letter-spacing:.12em;color:var(--muted);margin-bottom:4px;}
+  .fact dd{font-size:.98rem;color:var(--ink);}
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr;gap:40px;}
+    .facts{border-left:none;padding-left:0;border-top:1px solid var(--line);}}
+
+  /* EXPERIENCE */
+  .exp-top{display:flex;justify-content:space-between;align-items:baseline;
+    flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+  .exp-org{font-family:var(--serif);font-size:1.85rem;font-weight:500;letter-spacing:-.01em;}
+  .exp-role{font-family:var(--mono);font-size:.82rem;color:var(--accent);
+    letter-spacing:.06em;text-transform:uppercase;}
+  .exp-date{font-family:var(--mono);font-size:.82rem;color:var(--muted);}
+  .exp-loc{color:var(--muted);font-size:.95rem;margin-bottom:44px;}
+
+  .work{display:grid;grid-template-columns:64px 1fr;gap:0;}
+  .work-item{display:contents;}
+  .work-mark{position:relative;}
+  .work-mark span{font-family:var(--mono);font-size:.78rem;color:var(--accent);
+    position:relative;z-index:1;background:var(--paper);padding:2px 0;display:block;}
+  .work-line{position:absolute;left:5px;top:6px;bottom:-44px;width:1px;background:var(--line);}
+  .work-body{padding-bottom:44px;}
+  .work-item:last-child .work-body{padding-bottom:0;}
+  .work-item:last-child .work-line{display:none;}
+  .work-body h4{font-size:1.18rem;font-weight:600;margin-bottom:6px;letter-spacing:-.01em;}
+  .work-body p{color:var(--ink-soft);font-size:1rem;margin-bottom:14px;}
+  .metrics{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+  .metric{background:var(--accent-soft);border:1px solid rgba(42,49,189,.16);
+    border-radius:7px;padding:8px 13px;}
+  .metric b{font-family:var(--serif);font-size:1.15rem;color:var(--accent-ink);
+    font-weight:600;display:block;line-height:1.1;}
+  .metric small{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;
+    letter-spacing:.07em;color:var(--muted);}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;}
+  .tag{font-family:var(--mono);font-size:.71rem;color:var(--ink-soft);
+    border:1px solid var(--line);padding:3px 9px;border-radius:4px;}
+
+  /* PROJECTS */
+  .proj-list{border-top:1px solid var(--line);}
+  .proj{display:grid;grid-template-columns:96px 1fr 240px;gap:34px;
+    padding:38px 0;border-bottom:1px solid var(--line);
+    transition:background .25s;position:relative;}
+  .proj:hover{background:var(--paper-2);}
+  .proj-meta{font-family:var(--mono);font-size:.72rem;color:var(--accent);
+    line-height:1.7;}
+  .proj-meta .yr{color:var(--muted);display:block;}
+  .proj-main h4{font-family:var(--serif);font-size:1.7rem;font-weight:500;
+    letter-spacing:-.015em;margin-bottom:10px;}
+  .proj-desc{color:var(--ink-soft);font-size:1rem;margin-bottom:16px;max-width:54ch;}
+  .proj-result{font-family:var(--mono);font-size:.8rem;color:var(--accent-ink);
+    padding-left:14px;border-left:2px solid var(--accent);}
+  .proj-side{display:flex;flex-direction:column;gap:16px;align-items:flex-start;}
+  .proj .tags{margin:0;}
+  .proj-link{font-family:var(--mono);font-size:.76rem;text-transform:uppercase;
+    letter-spacing:.1em;text-decoration:none;color:var(--ink);
+    display:inline-flex;align-items:center;gap:7px;transition:gap .2s,color .2s;
+    margin-top:auto;}
+  .proj-link:hover{color:var(--accent);gap:12px;}
+  .proj-link .arr{transition:transform .2s;}
+  .proj-link:hover .arr{transform:translateX(2px);}
+  @media(max-width:760px){
+    .proj{grid-template-columns:1fr;gap:16px;padding:30px 0;}
+    .proj-side{flex-direction:column;}
+  }
+
+  /* SKILLS */
+  .skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:36px 30px;}
+  .skill-col h4{font-family:var(--mono);font-size:.74rem;text-transform:uppercase;
+    letter-spacing:.12em;color:var(--accent);margin-bottom:16px;
+    padding-bottom:10px;border-bottom:1px solid var(--line);}
+  .skill-col ul{list-style:none;}
+  .skill-col li{font-size:.97rem;color:var(--ink-soft);padding:5px 0;}
+  @media(max-width:760px){.skill-grid{grid-template-columns:1fr 1fr;gap:30px 24px;}}
+
+  /* RECOGNITION */
+  .rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;}
+  .rec-block h4{font-family:var(--mono);font-size:.74rem;text-transform:uppercase;
+    letter-spacing:.12em;color:var(--accent);margin-bottom:20px;}
+  .rec-item{padding:16px 0;border-bottom:1px solid var(--line-soft);}
+  .rec-item:last-child{border-bottom:none;}
+  .rec-item .rt{font-size:1.04rem;font-weight:600;letter-spacing:-.01em;}
+  .rec-item .rm{color:var(--muted);font-size:.92rem;}
+  .rec-item .rd{font-family:var(--mono);font-size:.74rem;color:var(--accent-ink);float:right;}
+  @media(max-width:760px){.rec-grid{grid-template-columns:1fr;gap:36px;}}
+
+  /* CONTACT */
+  .contact{text-align:center;padding-bottom:130px;}
+  .contact .sec-head{justify-content:center;}
+  .contact h2{font-family:var(--serif);font-weight:500;letter-spacing:-.025em;
+    line-height:1.05;font-size:clamp(2.6rem,7vw,5rem);margin-bottom:18px;}
+  .contact h2 em{font-style:italic;color:var(--accent);}
+  .contact p{max-width:480px;margin:0 auto 40px;color:var(--ink-soft);}
+  .contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;}
+  .clink{font-family:var(--mono);font-size:.82rem;text-decoration:none;
+    border:1px solid var(--ink);padding:13px 24px;border-radius:100px;
+    transition:background .2s,color .2s,transform .2s;letter-spacing:.04em;}
+  .clink:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px);}
+  .clink.primary{background:var(--accent);color:var(--paper-2);border-color:var(--accent);}
+  .clink.primary:hover{background:var(--accent-ink);}
+
+  footer{border-top:1px solid var(--line);}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    padding-top:26px;padding-bottom:26px;font-family:var(--mono);
+    font-size:.72rem;color:var(--muted);letter-spacing:.04em;}
+
+  .reveal{opacity:0;transform:translateY(22px);
+    transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media(max-width:560px){
+    .wrap{padding:0 22px;}
+    section{padding:80px 0;}
+    body{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap">
+    <div class="nav-name">Seoyeon Lee<span>.</span></div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <canvas id="embed-canvas"></canvas>
+  <div class="wrap">
+    <div class="hero-tag">M.S. Student · POSTECH ML Lab</div>
+    <h1>Seoyeon<br><em>Lee.</em></h1>
+    <div class="hero-role">graduate researcher in machine learning</div>
+    <p class="hero-intro">
+      I'm an M.S. student at the POSTECH Graduate School of AI, researching in
+      the ML Lab. My interests center on LLM agents, machine learning for NLP,
+      and generative AI.
+    </p>
+    <div class="hero-meta">
+      <span class="pill accent">M.S. in AI · POSTECH</span>
+      <span class="pill">POSTECH ML Lab</span>
+      <span class="pill">Pohang, Republic of Korea</span>
+    </div>
+  </div>
+  <div class="scroll-cue">scroll down</div>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <span class="sec-label">About</span>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="lead">
+          An M.S. student at POSTECH, working on LLM agents and machine
+          learning for NLP.
+        </p>
+        <p>
+          I'm an M.S. student at the <strong>POSTECH Graduate School of
+          AI</strong>, in the <strong><a href="https://ml.postech.ac.kr/" target="_blank" rel="noopener" style="text-decoration:underline;text-underline-offset:3px;">Machine Learning Lab</a></strong>, where I am supervised by
+          <strong><a href="http://dongwookim-ml.github.io/" target="_blank" rel="noopener" style="text-decoration:underline;text-underline-offset:3px;">Prof. Dongwoo Kim</a></strong>.
+          My research interests are LLM agents, machine learning for NLP, and
+          generative AI.
+        </p>
+        <p>
+          Before POSTECH I studied Computer Science at Ewha Womans University
+          and interned on the <strong>AI team at Lotte Homeshopping</strong>,
+          where I built embedding-based product-matching engines over hundreds
+          of thousands of products and a conversational data-analysis
+          tool. That applied-ML background is the foundation I now build
+          research on.
+        </p>
+      </div>
+      <dl class="facts reveal">
+        <div class="fact"><dt>Position</dt><dd>M.S. Student &amp; Graduate Researcher</dd></div>
+        <div class="fact"><dt>Lab</dt><dd><a href="https://ml.postech.ac.kr/" target="_blank" rel="noopener" style="text-decoration:underline;text-underline-offset:3px;">Machine Learning Lab</a>, Graduate School of AI</dd></div>
+        <div class="fact"><dt>Advisor</dt><dd><a href="http://dongwookim-ml.github.io/" target="_blank" rel="noopener" style="text-decoration:underline;text-underline-offset:3px;">Prof. Dongwoo Kim</a></dd></div>
+        <div class="fact"><dt>Focus</dt><dd>LLM agents · ML for NLP · Generative AI</dd></div>
+        <div class="fact"><dt>Prior</dt><dd>B.S. Computer Science, Ewha Womans University</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <span class="sec-label">Experience</span>
+      <span class="sec-rule"></span>
+    </div>
+
+    <div class="reveal">
+      <div class="exp-top">
+        <span class="exp-org">Lotte Homeshopping</span>
+        <span class="exp-role">AI Team · Research Intern</span>
+      </div>
+      <div class="exp-top">
+        <span class="exp-loc">Seoul, Republic of Korea</span>
+        <span class="exp-date">Jun – Sep 2025</span>
+      </div>
+    </div>
+
+    <div class="work reveal">
+
+      <div class="work-item">
+        <div class="work-mark"><span>A</span><div class="work-line"></div></div>
+        <div class="work-body">
+          <h4>Product-matching engine for broadcast scheduling</h4>
+          <p>
+            Built KR-SBERT embedding + DBSCAN clustering pipelines to identify
+            identical and similar products across internal and competitor
+            catalogs, improving the accuracy of sales forecasting. Similarity
+            combined product name, category, brand and price with tuned weights.
+          </p>
+          <div class="metrics">
+            <div class="metric"><b>~100K</b><small>SKUs processed</small></div>
+            <div class="metric"><b>85%</b><small>duplicate-removal rate</small></div>
+            <div class="metric"><b>2.67x</b><small>more matched pairs</small></div>
+            <div class="metric"><b>0.84</b><small>competitor-match correlation</small></div>
+            <div class="metric"><b>1.79M</b><small>similarity computations automated</small></div>
+          </div>
+          <div class="tags">
+            <span class="tag">KR-SBERT</span><span class="tag">DBSCAN</span>
+            <span class="tag">Cosine similarity</span><span class="tag">Python</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-mark"><span>B</span><div class="work-line"></div></div>
+        <div class="work-body">
+          <h4>LLM document-QA &amp; certificate-verification system</h4>
+          <p>
+            Automated the reading of QA documents with LLMs on AWS Bedrock.
+            Designed a chunking strategy that fixed table-reading failures in a
+            RAG QA chatbot, and built a Selenium / PyMuPDF pipeline that
+            extracts reference numbers from PDFs, verifies test-report
+            authenticity online, and assembles evidence screenshots — shipped
+            as Lambda APIs.
+          </p>
+          <div class="tags">
+            <span class="tag">AWS Bedrock</span><span class="tag">Lambda</span>
+            <span class="tag">RAG</span><span class="tag">Selenium</span>
+            <span class="tag">PyMuPDF</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-mark"><span>C</span><div class="work-line"></div></div>
+        <div class="work-body">
+          <h4>Conversational data-analysis (BI) tool</h4>
+          <p>
+            Prototyped a Dockerized BI assistant that unifies natural-language
+            SQL queries with general LLM chat. A routing flow sends each
+            query to a Text-to-SQL path or a chat path, runs it against MySQL,
+            and post-processes the result into a user-friendly answer.
+          </p>
+          <div class="metrics">
+            <div class="metric"><b>20% &rarr; 87%</b><small>answer accuracy (4x+)</small></div>
+          </div>
+          <div class="tags">
+            <span class="tag">OpenWebUI</span><span class="tag">Llama 3-8B</span>
+            <span class="tag">Qdrant</span><span class="tag">MySQL</span>
+            <span class="tag">Text-to-SQL</span><span class="tag">Docker</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">03</span>
+      <span class="sec-label">Selected Projects</span>
+      <span class="sec-rule"></span>
+    </div>
+
+    <div class="proj-list reveal">
+
+      <article class="proj">
+        <div class="proj-meta">P / 01<span class="yr">2025</span></div>
+        <div class="proj-main">
+          <h4>Personalized Perfume Recommender</h4>
+          <p class="proj-desc">
+            A hybrid recommender combining content-based filtering over perfume
+            notes and descriptions with collaborative filtering over user
+            preferences. S-BERT embeddings indexed in FAISS for fast similarity
+            search; user "likes" stored as a Neo4j graph for similar-user
+            recommendations. Deployed with Streamlit.
+          </p>
+          <div class="proj-result">FAISS content-based + Neo4j collaborative — hybrid</div>
+        </div>
+        <div class="proj-side">
+          <div class="tags">
+            <span class="tag">S-BERT</span><span class="tag">FAISS</span>
+            <span class="tag">Neo4j</span><span class="tag">Streamlit</span>
+          </div>
+          <a class="proj-link" href="https://github.com/sforseohn/Perfume-Recommender-System" target="_blank" rel="noopener">
+            Repository <span class="arr">&rarr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="proj-meta">P / 02<span class="yr">2025</span></div>
+        <div class="proj-main">
+          <h4>Nolli — Logic Quiz Platform for Children</h4>
+          <p class="proj-desc">
+            A platform that builds children's logical reasoning through quizzes.
+            GPT-4o mini generates and grades quizzes; a rubric-based
+            chain-of-thought prompt returns per-criterion scores with reasons. A
+            Korean-specialized Llama model was fine-tuned with LoRA + 8-bit
+            quantization for efficient training and memory use.
+          </p>
+          <div class="proj-result">LoRA + 8-bit quantization · rubric-based CoT</div>
+        </div>
+        <div class="proj-side">
+          <div class="tags">
+            <span class="tag">Llama / LoRA</span><span class="tag">GPT-4o mini</span>
+            <span class="tag">FastAPI</span><span class="tag">PyTorch</span>
+          </div>
+          <a class="proj-link" href="https://github.com/SKT-FlyAI-BoraMettugi" target="_blank" rel="noopener">
+            Repository <span class="arr">&rarr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="proj-meta">P / 03<span class="yr">2024</span></div>
+        <div class="proj-main">
+          <h4>Scholli — Scholarship Recommender</h4>
+          <p class="proj-desc">
+            A personalized scholarship-recommendation platform centered on AI and
+            backend development. Generative AI drives the recommendations, and an
+            optimized filtering algorithm cut processing time by ~97.3%. Built on
+            Django, MySQL and Redis, containerized and deployed on AWS.
+          </p>
+          <div class="proj-result">~97.3% faster filtering · 2 competition awards</div>
+        </div>
+        <div class="proj-side">
+          <div class="tags">
+            <span class="tag">Django</span><span class="tag">Redis</span>
+            <span class="tag">OpenAI</span><span class="tag">AWS / Docker</span>
+          </div>
+          <a class="proj-link" href="https://github.com/Musccat" target="_blank" rel="noopener">
+            Repository <span class="arr">&rarr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="proj-meta">P / 04<span class="yr">2024</span></div>
+        <div class="proj-main">
+          <h4>Skin Cancer Detection (ISIC 2024)</h4>
+          <p class="proj-desc">
+            A CNN classifier that distinguishes benign from malignant skin
+            lesions on the Kaggle ISIC 2024 dataset. Data augmentation addressed
+            severe class imbalance, and a fine-tuned ResNet-50 lifted
+            classification performance.
+          </p>
+          <div class="proj-result">ResNet-50 fine-tuning · augmentation for imbalance</div>
+        </div>
+        <div class="proj-side">
+          <div class="tags">
+            <span class="tag">PyTorch</span><span class="tag">ResNet-50</span>
+            <span class="tag">NumPy</span>
+          </div>
+          <a class="proj-link" href="https://github.com/SeoYeomm/ISIC-2024---Skin-Cancer-Detection-with-3D-TBP" target="_blank" rel="noopener">
+            Repository <span class="arr">&rarr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="proj-meta">P / 05<span class="yr">2023</span></div>
+        <div class="proj-main">
+          <h4>Find Your Pokémon — Image Classification</h4>
+          <p class="proj-desc">
+            A deep-learning classifier for 20 Pokémon species, covering the full
+            pipeline from data preprocessing through systematic comparison of
+            several architectures. MobileNet was selected as the most efficient
+            model and fine-tuned, reaching 90.41% test accuracy.
+          </p>
+          <div class="proj-result">90.41% test accuracy · multi-model comparison</div>
+        </div>
+        <div class="proj-side">
+          <div class="tags">
+            <span class="tag">TensorFlow</span><span class="tag">MobileNet</span>
+            <span class="tag">NumPy</span>
+          </div>
+          <a class="proj-link" href="https://github.com/SeoYeomm/Find-Your-Pokemon" target="_blank" rel="noopener">
+            Repository <span class="arr">&rarr;</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <span class="sec-label">Technical Skills</span>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="skill-grid reveal">
+      <div class="skill-col">
+        <h4>ML &amp; Research</h4>
+        <ul>
+          <li>PyTorch</li><li>TensorFlow</li><li>scikit-learn</li>
+          <li>SBERT / embeddings</li><li>ResNet · MobileNet</li>
+          <li>LoRA · quantization</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>LLM &amp; Retrieval</h4>
+        <ul>
+          <li>RAG pipelines</li><li>AWS Bedrock</li><li>Llama · OpenAI</li>
+          <li>FAISS · Qdrant</li><li>Neo4j</li><li>Text-to-SQL</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>Backend &amp; Infra</h4>
+        <ul>
+          <li>FastAPI</li><li>Django</li><li>Flask</li>
+          <li>Docker</li><li>AWS · MS Azure</li><li>Selenium</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>Languages &amp; Data</h4>
+        <ul>
+          <li>Python · C++ · Java</li><li>NumPy · Pandas</li>
+          <li>MySQL · SQLite</li><li>Redis · Firebase</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOGNITION -->
+<section id="recognition">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">05</span>
+      <span class="sec-label">Education &amp; Recognition</span>
+      <span class="sec-rule"></span>
+    </div>
+    <div class="rec-grid">
+      <div class="rec-block reveal">
+        <h4>Education</h4>
+        <div class="rec-item">
+          <span class="rd">2026 –</span>
+          <div class="rt">POSTECH — Graduate School of AI</div>
+          <div class="rm">M.S. in Artificial Intelligence · ML Lab</div>
+        </div>
+        <div class="rec-item">
+          <span class="rd">2021 – 2025</span>
+          <div class="rt">Ewha Womans University</div>
+          <div class="rm">B.S. in Computer Science · GPA 4.08 / 4.5</div>
+        </div>
+        <div class="rec-item">
+          <span class="rd">2024</span>
+          <div class="rt">EPITA, Strasbourg — France</div>
+          <div class="rm">Summer exchange program</div>
+        </div>
+      </div>
+
+      <div class="rec-block reveal">
+        <h4>Awards</h4>
+        <div class="rec-item">
+          <span class="rd">2024</span>
+          <div class="rt">Excellence Award — 4th AI Idea Competition</div>
+          <div class="rm">For innovative real-world use of AI in the personalized
+            scholarship system · 54:1 competition ratio.</div>
+        </div>
+        <div class="rec-item">
+          <span class="rd">2024</span>
+          <div class="rt">Encouragement Award — Campus SW Startup Competition</div>
+          <div class="rm">For software development capability and startup potential.</div>
+        </div>
+
+        <h4 style="margin-top:34px;">Selected Program &amp; Activities</h4>
+        <div class="rec-item">
+          <span class="rd">2025</span>
+          <div class="rt">SKT FLY AI Challenger</div>
+          <div class="rm">Deep-learning study, Azure cloud deployment, AI team projects.</div>
+        </div>
+        <div class="rec-item">
+          <span class="rd">2024</span>
+          <div class="rt">AI Research Club</div>
+          <div class="rm">Paper reading on recent AI methods and project work.</div>
+        </div>
+        <div class="rec-item">
+          <span class="rd">2023</span>
+          <div class="rt">Algorithm Study</div>
+          <div class="rm">Core algorithms and problem solving in C++.</div>
+        </div>
+        <div class="rec-item">
+          <span class="rd">2023</span>
+          <div class="rt">Game Development Club</div>
+          <div class="rm">Unity and C#; built game projects with the team.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">06</span>
+      <span class="sec-label">Get in Touch</span>
+      <span class="sec-rule"></span>
+    </div>
+    <h2 class="reveal">Let's build something<br><em>that learns.</em></h2>
+    <p class="reveal">
+      I'm always glad to talk about LLM agents, ML for NLP, or generative AI —
+      research collaborations, internships, or just ideas. The fastest way to
+      reach me is email.
+    </p>
+    <div class="contact-links reveal">
+      <a class="clink primary" href="mailto:sy010629@gmail.com">sy010629@gmail.com</a>
+      <a class="clink" href="https://github.com/SeoYeomm" target="_blank" rel="noopener">GitHub</a>
+      <a class="clink" href="https://velog.io/@ddsqe1" target="_blank" rel="noopener">Tech Blog</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Seoyeon Lee</span>
+    <span>Built &amp; hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay = (i % 4) * 0.07 + 's';
+  io.observe(el);
+});
+
+const navLinks = [...document.querySelectorAll('.nav-links a')];
+const sections = navLinks.map(a=>document.querySelector(a.getAttribute('href')));
+const navIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = '#'+e.target.id;
+      navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')===id));
+    }
+  });
+},{rootMargin:'-45% 0px -50% 0px'});
+sections.forEach(s=>s && navIO.observe(s));
+
+(function(){
+  const canvas = document.getElementById('embed-canvas');
+  const ctx = canvas.getContext('2d');
+  let w,h,dpr,pts=[];
+  const COUNT = 78;
+  function rand(a,b){return a+Math.random()*(b-a);}
+  function init(){
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    w = canvas.offsetWidth; h = canvas.offsetHeight;
+    canvas.width = w*dpr; canvas.height = h*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const centers = Array.from({length:5},()=>({x:rand(0,w),y:rand(0,h)}));
+    pts = Array.from({length:COUNT},()=>{
+      const c = centers[Math.floor(Math.random()*centers.length)];
+      return {
+        x: c.x + rand(-110,110),
+        y: c.y + rand(-110,110),
+        vx: rand(-0.16,0.16),
+        vy: rand(-0.16,0.16),
+        r: rand(1.1,2.6),
+        accent: Math.random() < 0.22
+      };
+    });
+  }
+  function step(){
+    ctx.clearRect(0,0,w,h);
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const a=pts[i], b=pts[j];
+        const dx=a.x-b.x, dy=a.y-b.y;
+        const d=Math.hypot(dx,dy);
+        if(d<104){
+          ctx.strokeStyle='rgba(27,26,23,'+(0.14*(1-d/104))+')';
+          ctx.lineWidth=1;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+    for(const p of pts){
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<-20||p.x>w+20) p.vx*=-1;
+      if(p.y<-20||p.y>h+20) p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = p.accent ? 'rgba(42,49,189,0.85)' : 'rgba(27,26,23,0.42)';
+      ctx.fill();
+    }
+    requestAnimationFrame(step);
+  }
+  init();
+  step();
+  let rt;
+  window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(init,180); });
+})();
+</script>
+</body>
+</html>
